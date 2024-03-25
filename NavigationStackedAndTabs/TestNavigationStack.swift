@@ -8,64 +8,65 @@
 import SwiftUI
 
 struct TestNavigationStack: View {
+    let appleProducts = ["Mac", "Macbook", "iPhone", "iPad"]
+    
+    // NavigationPath를 사용하면타입에 상관없이 넣을 수 있다
+    @State private var stackPath: NavigationPath = .init()
+    
     var body: some View {
-        NavigationStack {
-            List(0...6, id: \.self) { index in
-                NavigationLink(value: index) {
-                    Text("\(index) 버튼")
+        NavigationStack(path: $stackPath) {
+            List(appleProducts, id: \.self) { product in
+//                NavigationLink(value: product) {
+//                    Text(product)
+//                }
+                Button {
+                    stackPath.append(product)
+                } label: {
+                    Text(product)
                         .font(.largeTitle)
                         .bold()
                 }
                 
+                Button {
+                    stackPath.append(1)
+                } label: {
+                    Text("넘버로 네비게이션")
+                }
+                
             }
-            .navigationTitle("네비게이션 연습")
-            .navigationDestination(for: Int.self) {
-                _ in FirstDestinationView(viewModel: FirstDestinationViewModel())
+            .navigationTitle("네비게이션 스택")
+            .navigationDestination(for: String.self) { product in
+//                Text("\(product) has Clicekd!")
+                AppleProductView(product: product, path: $stackPath)
             }
+            .navigationDestination(for: Int.self) { number in
+                Text("넘버가 선택되었습니다")
+            }
+            
+            
+            
         }
+      
     }
 }
 
-@MainActor
-class FirstDestinationViewModel: ObservableObject {
-    @Published var image: UIImage? = nil
-    
-    init() {
-        downloadImage()
-    }
-    
-    func downloadImage() {
-        Task {
-            let url = URL(string: "https://picsum.photos/200")!
-            let (data, response) = try await URLSession.shared.data(from: url)
-            if let image = UIImage(data: data) {
-                self.image = image
-                print("이미지가 다운로드 되었습니다.")
-            }
-        }
-    }
-}
-
-struct FirstDestinationView: View{
-    @StateObject private var viewModel: FirstDestinationViewModel
-    
-    init(viewModel: FirstDestinationViewModel) {
-        print("목적기가 되는 뷰가 생성되었습니다.")
-        
-        _viewModel = StateObject(wrappedValue: viewModel)
-    }
+struct AppleProductView: View{
+    let product: String
+    @Binding var path: NavigationPath
     
     var body: some View {
-        VStack {
-            if let image = viewModel.image {
-                Image(uiImage: image)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 200, height: 200)
-            }
+        VStack(spacing: 20) {
+            Text(product)
+                .font(.largeTitle)
+                .onTapGesture {
+                    path.append("세번째 혹은 더 깊이")
+                }
+            
+            Text("모두 없애버리기")
+                .onTapGesture {
+                    path = .init()
+                }
         }
-        
-        Text("목적지가 되는 뷰")
     }
 }
 
