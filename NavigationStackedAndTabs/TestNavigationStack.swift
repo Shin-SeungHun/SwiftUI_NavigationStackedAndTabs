@@ -12,7 +12,7 @@ struct TestNavigationStack: View {
         NavigationView {
             List(0...6, id: \.self) { index in
                 NavigationLink {
-                    Text("\(index)가 선택되었습니다")
+                    FirstDestinationView(viewModel: FirstDestinationViewModel())
                 } label: {
                     Text("\(index)")
                 }
@@ -20,6 +20,49 @@ struct TestNavigationStack: View {
             }
         }
         .navigationTitle("네비게이션 연습")
+    }
+}
+
+@MainActor
+class FirstDestinationViewModel: ObservableObject {
+    @Published var image: UIImage? = nil
+    
+    init() {
+        downloadImage()
+    }
+    
+    func downloadImage() {
+        Task {
+            let url = URL(string: "https://picsum.photos/200")!
+            let (data, response) = try await URLSession.shared.data(from: url)
+            if let image = UIImage(data: data) {
+                self.image = image
+                print("이미지가 다운로드 되었습니다.")
+            }
+        }
+    }
+}
+
+struct FirstDestinationView: View{
+    @StateObject private var viewModel: FirstDestinationViewModel
+    
+    init(viewModel: FirstDestinationViewModel) {
+        print("목적기가 되는 뷰가 생성되었습니다.")
+        
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
+    
+    var body: some View {
+        VStack {
+            if let image = viewModel.image {
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 200, height: 200)
+            }
+        }
+        
+        Text("목적지가 되는 뷰")
     }
 }
 
