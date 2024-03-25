@@ -7,6 +7,18 @@
 
 import SwiftUI
 
+enum ViewOptions: Hashable {
+    case homeFirst(champion: ChampionModel)
+    case homeSecond(champion: ChampionModel)
+    
+    @ViewBuilder func view() -> some View {
+        switch self {
+        case .homeFirst(let champion): HomeRowDestination(champion: champion)
+        case .homeSecond(let champion): HomeSkinBuyView(champion: champion)
+        }
+    }
+}
+
 struct ContentView: View {
     @State var currentTab: Tab = .home
     
@@ -30,6 +42,10 @@ struct ContentView: View {
                 }
                 
                 CustomTabView(currentTab: $currentTab)
+            }
+            .navigationDestination(for: ViewOptions.self) { option in
+                option.view()
+                
             }
         }
         
@@ -63,15 +79,15 @@ struct HomeView: View {
         ScrollView {
             LazyVStack {
                 ForEach(ChampionModel.mockChampions) { champion in
-                    NavigationLink(value: champion) {
+                    NavigationLink(value: ViewOptions.homeFirst(champion: champion)) {
                         HomeRowView(champion: champion)
                     }
                     .tint(.primary)
                 }
                 .padding(.bottom, 50)
-                .navigationDestination(for: ChampionModel.self) { champion in
-                    HomeRowDestination(champion: champion)
-                }
+//                .navigationDestination(for: ChampionModel.self) { champion in
+//                    HomeRowDestination(champion: champion)
+//                }
             }
         }
     }
@@ -127,16 +143,24 @@ struct HomeRowDestination: View {
             Text(champion.name)
                 .font(.largeTitle)
             
-            NavigationLink(value: champion.name) {
+            NavigationLink(value: ViewOptions.homeSecond(champion: champion)) {
                 Text("스킨 사기")
                     .font(.title)
                     .bold()
             }
             
         }
-        .navigationDestination(for: String.self) { name in
-            Text(name).font(.largeTitle).bold() + Text("스킨을 사시겠어요?")
-        }
+//        .navigationDestination(for: ChampionModel.self) { champion in
+//            HomeSkinBuyView(champion: champion)
+//        }
+    }
+}
+
+struct HomeSkinBuyView: View {
+    let champion: ChampionModel
+    
+    var body: some View {
+        Text(champion.name).font(.largeTitle).bold() + Text("스킨을 사시겠어요?")
     }
 }
 

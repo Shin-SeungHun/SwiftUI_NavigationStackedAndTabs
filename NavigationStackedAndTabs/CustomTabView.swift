@@ -60,7 +60,7 @@ struct CustomTabView: View {
         .frame(height: 30)
         .padding(.top, 10)
         .padding(.bottom, 8)
-        .background(.ultraThinMaterial)
+        .background(.white)
     }
 }
 
