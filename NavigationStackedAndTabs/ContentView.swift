@@ -39,7 +39,7 @@ final class NavigationPathFinder: ObservableObject {
 struct ContentView: View {
     @EnvironmentObject private var navPathFinder: NavigationPathFinder
     @State var currentTab: Tab = .home
-    @State var path: NavigationPath = .init()
+//    @State var path: NavigationPath = .init()
     
     init() {
         // 탭바를 감췄을때는 터치가 안되도록
@@ -101,12 +101,12 @@ struct HomeView: View {
             LazyVStack {
                 ForEach(ChampionModel.mockChampions) { champion in
                     
-                    Button(action: {
+                    Button {
                         navPathFinder.addPath(option: .homeFirst(champion: champion))
                         
-                    }, label: {
+                    } label: {
                         HomeRowView(champion: champion)
-                    })
+                    }
 //                    NavigationLink(value: ViewOptions.homeFirst(champion: champion)) {
 //                        
 //                    }
@@ -174,7 +174,7 @@ struct HomeRowDestination: View {
                 .font(.largeTitle)
             
             Button {
-                
+                navPathFinder.addPath(option: .homeSecond(champion: champion))
             } label: {
                 Text("스킨 사기")
                     .font(.title)
