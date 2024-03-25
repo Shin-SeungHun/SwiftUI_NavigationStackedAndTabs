@@ -63,16 +63,18 @@ struct HomeView: View {
         ScrollView {
             LazyVStack {
                 ForEach(ChampionModel.mockChampions) { champion in
-                    HomeRowView(champion: champion)
+                    NavigationLink(value: champion) {
+                        HomeRowView(champion: champion)
+                    }
+                    .tint(.primary)
+                }
+                .padding(.bottom, 50)
+                .navigationDestination(for: ChampionModel.self) { champion in
+                    HomeRowDestination(champion: champion)
                 }
             }
-            .padding(.bottom, 50)
         }
     }
-}
-
-#Preview {
-    ContentView()
 }
 
 struct HomeRowView: View {
@@ -106,4 +108,39 @@ struct HomeRowView: View {
             Divider()
         }
     }
+}
+
+struct HomeRowDestination: View {
+    let champion: ChampionModel
+    var body: some View {
+        VStack(spacing: 20) {
+            AsyncImage(url: URL(string: champion.imageURL)) { image in
+                image
+                    .resizable()
+                    .scaledToFit()
+                    .cornerRadius(10)
+            } placeholder: {
+                ProgressView()
+            }
+            .frame(width: 320, height: 190)
+            
+            Text(champion.name)
+                .font(.largeTitle)
+            
+            NavigationLink(value: champion.name) {
+                Text("스킨 사기")
+                    .font(.title)
+                    .bold()
+            }
+            
+        }
+        .navigationDestination(for: String.self) { name in
+            Text(name).font(.largeTitle).bold() + Text("스킨을 사시겠어요?")
+        }
+    }
+}
+
+
+#Preview {
+    ContentView()
 }
