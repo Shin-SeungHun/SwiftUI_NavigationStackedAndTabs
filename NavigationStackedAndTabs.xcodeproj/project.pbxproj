@@ -12,6 +12,7 @@
 		4C7872E82BB1685900CDFFAB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C7872E72BB1685900CDFFAB /* Assets.xcassets */; };
 		4C7872EB2BB1685900CDFFAB /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C7872EA2BB1685900CDFFAB /* Preview Assets.xcassets */; };
 		4C7872F22BB168B900CDFFAB /* CustomTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7872F12BB168B900CDFFAB /* CustomTabView.swift */; };
+		4C7872F42BB16B8100CDFFAB /* TestNavigationStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7872F32BB16B8100CDFFAB /* TestNavigationStack.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		4C7872E72BB1685900CDFFAB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4C7872EA2BB1685900CDFFAB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		4C7872F12BB168B900CDFFAB /* CustomTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabView.swift; sourceTree = "<group>"; };
+		4C7872F32BB16B8100CDFFAB /* TestNavigationStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestNavigationStack.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +57,7 @@
 			children = (
 				4C7872E32BB1685400CDFFAB /* NavigationStackedAndTabsApp.swift */,
 				4C7872E52BB1685400CDFFAB /* ContentView.swift */,
+				4C7872F32BB16B8100CDFFAB /* TestNavigationStack.swift */,
 				4C7872F12BB168B900CDFFAB /* CustomTabView.swift */,
 				4C7872E72BB1685900CDFFAB /* Assets.xcassets */,
 				4C7872E92BB1685900CDFFAB /* Preview Content */,
@@ -142,6 +145,7 @@
 			files = (
 				4C7872F22BB168B900CDFFAB /* CustomTabView.swift in Sources */,
 				4C7872E62BB1685400CDFFAB /* ContentView.swift in Sources */,
+				4C7872F42BB16B8100CDFFAB /* TestNavigationStack.swift in Sources */,
 				4C7872E42BB1685400CDFFAB /* NavigationStackedAndTabsApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
