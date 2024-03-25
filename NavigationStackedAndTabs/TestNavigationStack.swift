@@ -9,17 +9,20 @@ import SwiftUI
 
 struct TestNavigationStack: View {
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List(0...6, id: \.self) { index in
-                NavigationLink {
-                    FirstDestinationView(viewModel: FirstDestinationViewModel())
-                } label: {
-                    Text("\(index)")
+                NavigationLink(value: index) {
+                    Text("\(index) 버튼")
+                        .font(.largeTitle)
+                        .bold()
                 }
                 
             }
+            .navigationTitle("네비게이션 연습")
+            .navigationDestination(for: Int.self) {
+                _ in FirstDestinationView(viewModel: FirstDestinationViewModel())
+            }
         }
-        .navigationTitle("네비게이션 연습")
     }
 }
 
